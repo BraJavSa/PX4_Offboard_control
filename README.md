@@ -13,14 +13,14 @@ This repository contains the development in Gazebo, ROS (bridge with MAVLink) fo
   
   `sudo apt install ros-noetic-desktop-full`
   
-  `source /opt/ros/noetic/setup.bash
+  `source /opt/ros/noetic/setup.bash`
 
   
-  sudo apt install python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential
+  `sudo apt install python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential`
   
-  sudo rosdep init
+  `sudo rosdep init`
   
-  rosdep update`
+  `rosdep update`
 
 
 ## Install MAVROS
