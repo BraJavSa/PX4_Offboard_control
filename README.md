@@ -29,13 +29,19 @@ This repository contains the development in Gazebo, ROS (bridge with MAVLink) fo
 
 ## Clone repository
  `cd catkin-ws`
+ 
  Clone this repository
+ 
  `cd`
+ 
  `https://github.com/BraJavSa/PX4-Autopilot.git --recursive`
+ 
  `sudo bash ./PX4-Autopilot/Tools/setup/ubuntu.sh`
+ 
  reboot your ubuntu
  
  
  `cd PX4-Autopilot`
+ 
  `make px4_sitl gazebo_boat'
  
