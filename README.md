@@ -43,5 +43,5 @@ This repository contains the development in Gazebo, ROS (bridge with MAVLink) fo
  
  `cd PX4-Autopilot`
  
- `make px4_sitl gazebo_boat'
+ `make px4_sitl gazebo_boat`
  
