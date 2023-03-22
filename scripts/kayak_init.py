@@ -13,7 +13,7 @@ class OffboardNode:
         self.state_sub = rospy.Subscriber("mavros/state", State, self.state_cb)
         self.local_velo_pub= rospy.Publisher("mavros/setpoint_velocity/cmd_vel_unstamped", Twist, queue_size=10)
         
-        self.vel_sub = rospy.Subscriber("kayak/cmd_vel", Twist, self.update_velocity)
+        self.vel_sub = rospy.Subscriber("vehicle/cmd_vel", Twist, self.update_velocity)
 
         rospy.wait_for_service("/mavros/cmd/arming")
         self.arming_client = rospy.ServiceProxy("mavros/cmd/arming", CommandBool)    
