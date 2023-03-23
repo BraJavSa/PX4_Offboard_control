@@ -41,6 +41,8 @@ This repository contains the development in Gazebo, ROS (bridge with MAVLink) fo
  
  `sudo bash ./PX4-Autopilot/Tools/setup/ubuntu.sh`
  
+ Install GStreamer
+
  reboot your ubuntu
  
  
@@ -50,15 +52,32 @@ This repository contains the development in Gazebo, ROS (bridge with MAVLink) fo
  
  add this to your .bashrc
 
+```
+  source ~/catkin_ws/devel/setup.bash
+  
+  source ~/PX4-Autopilot/Tools/simulation/gazebo-classic/setup_gazebo.bash ~/PX4-Autopilot ~/PX4-Autopilot/build/px4_sitl_default
+  
+  export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/PX4-Autopilot
+  
+  export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/PX4-Autopilot/Tools/simulation/gazebo-classic/sitl_gazebo-classic
+ ``` 
 
-  `source ~/catkin_ws/devel/setup.bash`
+Now we will to install  SITL_gazebo-classic plugins
+
+``` 
+  mkdir -p ~/src
+  cd src
+  git clone --recursive https://github.com/PX4/PX4-SITL_gazebo-classic
   
-  `source ~/PX4-Autopilot/Tools/simulation/gazebo-classic/setup_gazebo.bash ~/PX4-Autopilot ~/PX4-Autopilot/build/px4_sitl_default`
-  
-  `export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/PX4-Autopilot`
-  
-  `export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/PX4-Autopilot/Tools/simulation/gazebo-classic/sitl_gazebo-classic`
-  
+  cd ~/src/sitl_gazebo
+  mkdir build
+  cd build
+  cmake ..
+  make -j$(nproc) -l$(nproc) # make -j2 if you don't have a good laptop
+  sudo make install
+  . /usr/share/gazebo/setup.sh
+  . /usr/share/mavlink_sitl_gazebo/setup.sh
+  ``` 
 
 ## Download QGC
 
@@ -80,7 +99,7 @@ If you want to change the geo-position you need to modify the world file
 
 ### NOTE 3
 
-Put this in the end of .sdf file if you want to have a cam in the vehicle
+Put this in the end of sdf file if you want to have a cam in the vehicle
 
 ```
 <include>
