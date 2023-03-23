@@ -37,7 +37,7 @@ This repository contains the development in Gazebo, ROS (bridge with MAVLink) fo
 
  `cd`
  
- `https://github.com/BraJavSa/PX4-Autopilot.git --recursive`
+ `git clone https://github.com/PX4/PX4-Autopilot.git --recursive`
  
  `sudo bash ./PX4-Autopilot/Tools/setup/ubuntu.sh`
  
