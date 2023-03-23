@@ -38,7 +38,7 @@ class OffboardNode:
         
         self.pose.pose.position.x = 0
         self.pose.pose.position.y = 0
-        self.pose.pose.position.z = 10
+        self.pose.pose.position.z = 0
 
         for i in range(100):   
             self.local_pose_pub.publish(self.pose)
