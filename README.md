@@ -3,25 +3,17 @@ This repository contains the development in Gazebo, ROS (bridge with MAVLink) fo
 
 ## Install ROS Noetic:
   
-  `sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'`
-  
-  `sudo apt install curl `
-  
-  `curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -` 
-  
-  `sudo apt update`
-  
-  `sudo apt install ros-noetic-desktop-full`
-  
-  `source /opt/ros/noetic/setup.bash`
-
-  
-  `sudo apt install python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential`
-  
-  `sudo rosdep init`
-  
-  `rosdep update`
-
+  ```
+  sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+  sudo apt install curl 
+  curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -`
+  sudo apt update
+  sudo apt install ros-noetic-desktop-full
+  source /opt/ros/noetic/setup.bash
+  sudo apt install python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential
+  sudo rosdep init
+  rosdep update
+```
 
 ## Install MAVROS
   
@@ -29,38 +21,33 @@ This repository contains the development in Gazebo, ROS (bridge with MAVLink) fo
 
 ## Clone repository
 
- `cd catkin-ws`
- 
- Clone this repository
+ Create or open your catkin_ws and clone this repository on ~/catkin_ws/src
  
 ## Download and install PX4-Ardupilot
 
- `cd`
- 
- `git clone https://github.com/PX4/PX4-Autopilot.git --recursive`
- 
- `sudo bash ./PX4-Autopilot/Tools/setup/ubuntu.sh`
- 
+```
+ cd
+ git clone https://github.com/PX4/PX4-Autopilot.git --recursive
+ sudo bash ./PX4-Autopilot/Tools/setup/ubuntu.sh
+ ```
+
  Install GStreamer
 
  reboot your ubuntu
  
- 
- `cd PX4-Autopilot`
- 
- `make px4_sitl gazebo_boat`
- 
+ ```
+ cd PX4-Autopilot
+ make px4_sitl gazebo_boat
+
+ ```
  add this to your .bashrc
 
 ```
   source ~/catkin_ws/devel/setup.bash
-  
   source ~/PX4-Autopilot/Tools/simulation/gazebo-classic/setup_gazebo.bash ~/PX4-Autopilot ~/PX4-Autopilot/build/px4_sitl_default
-  
   export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/PX4-Autopilot
-  
   export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/PX4-Autopilot/Tools/simulation/gazebo-classic/sitl_gazebo-classic
- ``` 
+``` 
 
 Now we will to install  SITL_gazebo-classic plugins
 
@@ -68,7 +55,6 @@ Now we will to install  SITL_gazebo-classic plugins
   mkdir -p ~/src
   cd src
   git clone --recursive https://github.com/PX4/PX4-SITL_gazebo-classic
-  
   cd ~/src/sitl_gazebo
   mkdir build
   cd build
@@ -77,7 +63,7 @@ Now we will to install  SITL_gazebo-classic plugins
   sudo make install
   . /usr/share/gazebo/setup.sh
   . /usr/share/mavlink_sitl_gazebo/setup.sh
-  ``` 
+``` 
 
 ## Download QGC
 
