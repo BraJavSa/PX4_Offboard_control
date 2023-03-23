@@ -82,6 +82,7 @@ If you want to change the geo-position you need to modify the world file
 
 Put this in the end of .sdf file if you want to have a cam in the vehicle
 
+```
 <include>
       <uri>model://geotagged_cam</uri>
       <pose>0.9 0 1.3 3.15 3.2 0</pose>
@@ -90,5 +91,5 @@ Put this in the end of .sdf file if you want to have a cam in the vehicle
       <parent>boat::base_link</parent>
       <child>geotagged_cam::camera_link</child>
     </joint>
-
+```
 
