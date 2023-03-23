@@ -69,11 +69,6 @@ Now we will to install  SITL_gazebo-classic plugins
 
 you can download it on https://docs.qgroundcontrol.com/master/en/releases/daily_builds.html , do not forget to give it permissions
 
-### Run
-
-`roslaunch px4_offboard_control mavros_posix_sitl_boat.launch`
-
-You can change the vehicle on the launch but is necessary to change in px4.launch too.
 
 ### NOTE 1
 
@@ -98,3 +93,12 @@ Put this in the end of sdf file if you want to have a cam in the vehicle
     </joint>
 ```
 
+### Run
+
+`roslaunch px4_offboard_control mavros_posix_sitl_boat.launch`
+`rosrun px4_offboard_control kayak_init.py`
+
+You can change the vehicle on the launch but is necessary to change in px4.launch too.
+
+Kayak_init.py is a python code that creates a topic for velocity commands
+drone-init.py is a python code that creates a topic for position commands
