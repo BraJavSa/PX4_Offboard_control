@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 import rospy
 import time 
-from geometry_msgs.msg import PoseStamped, Twist, TwistStamped
-from mavros_msgs.msg import State, ActuatorControl
+from geometry_msgs.msg import PoseStamped, Twist
+from mavros_msgs.msg import State
 from mavros_msgs.srv import CommandBool, CommandBoolRequest, SetMode, SetModeRequest
 
 class OffboardNode:
@@ -11,9 +11,9 @@ class OffboardNode:
         rospy.init_node("offb_node_py")
         
         self.state_sub = rospy.Subscriber("mavros/state", State, self.state_cb)
-        self.local_velo_pub= rospy.Publisher("mavros/target_actuator_control/", ActuatorControl, queue_size=10)
+        self.local_pose_pub= rospy.Publisher("mavros/setpoint_position/local", PoseStamped, queue_size=10)
         
-        self.vel_sub = rospy.Subscriber("vehicle/cmd_act", ActuatorControl, self.update_velocity)
+        self.pos_sub = rospy.Subscriber("vehicle/cmd_pos", PoseStamped, self.update_pos)
 
         rospy.wait_for_service("/mavros/cmd/arming")
         self.arming_client = rospy.ServiceProxy("mavros/cmd/arming", CommandBool)    
@@ -21,29 +21,30 @@ class OffboardNode:
         rospy.wait_for_service("/mavros/set_mode")
         self.set_mode_client = rospy.ServiceProxy("mavros/set_mode", SetMode)
 
-        self.velo = ActuatorControl()
+        self.pose = PoseStamped()
         self.offb_set_mode = SetModeRequest()
         self.offb_set_mode.custom_mode = 'OFFBOARD'
         self.arm_cmd = CommandBoolRequest()
         self.arm_cmd.value = True
         
- 
+
     def state_cb(self, msg):
         self.current_state = msg
     
-    def update_velocity(self, vel):
-    	self.velo = vel
+    def update_pos(self, pos):
+    	self.pose = pos
 
-    def send_initial_velocity(self):
+    def send_initial_position(self):
         
-        self.velo.group_mix=0
-        self.velo.controls=[1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+        self.pose.pose.position.x = 0
+        self.pose.pose.position.y = 0
+        self.pose.pose.position.z = 0
 
         for i in range(100):   
-            self.local_velo_pub.publish(self.velo)
+            self.local_pose_pub.publish(self.pose)
             time.sleep(0.05)
 
-        rospy.loginfo("Initial velocity published")
+        rospy.loginfo("Initial position published")
         self.set_mode_client.call(self.offb_set_mode)
         self.arming_client.call(self.arm_cmd)
         rospy.loginfo("Arming and offboard mode completed")
@@ -64,7 +65,7 @@ class OffboardNode:
 
                 last_req = rospy.Time.now()
 
-        self.local_velo_pub.publish(self.velo)
+        self.local_pose_pub.publish(self.pose)
 
 def disarming_and_hold_mode():
     
@@ -92,7 +93,7 @@ def call_service(service,type,val):
 
 def main():
     offboard_mode = OffboardNode()
-    offboard_mode.send_initial_velocity()
+    offboard_mode.send_initial_position()
     rospy.on_shutdown(disarming_and_hold_mode)
     rate = rospy.Rate(20)
 

@@ -1,3 +1,5 @@
-clear all
-pose = rossubscriber('/mavros/local_position/pose','geometry_msgs/PoseStamped');
 
+while true
+pose = rostopic("echo", '/mavros/local_position/pose'); 
+mappos = [pose.Pose.Position.X, pose.Pose.Position.Y]
+end

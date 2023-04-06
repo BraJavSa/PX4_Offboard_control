@@ -2,7 +2,7 @@
 import rospy
 import time 
 from geometry_msgs.msg import PoseStamped, Twist, TwistStamped
-from mavros_msgs.msg import State, ActuatorControl
+from mavros_msgs.msg import State, ActuatorControl, Thrust
 from mavros_msgs.srv import CommandBool, CommandBoolRequest, SetMode, SetModeRequest
 
 class OffboardNode:
@@ -11,9 +11,9 @@ class OffboardNode:
         rospy.init_node("offb_node_py")
         
         self.state_sub = rospy.Subscriber("mavros/state", State, self.state_cb)
-        self.local_velo_pub= rospy.Publisher("mavros/target_actuator_control/", ActuatorControl, queue_size=10)
+        self.local_velo_pub= rospy.Publisher("mavros/setpoint_attitude/thrust", Thrust, queue_size=10)
         
-        self.vel_sub = rospy.Subscriber("vehicle/cmd_act", ActuatorControl, self.update_velocity)
+        self.vel_sub = rospy.Subscriber("vehicle/thrust", Thrust, self.update_velocity)
 
         rospy.wait_for_service("/mavros/cmd/arming")
         self.arming_client = rospy.ServiceProxy("mavros/cmd/arming", CommandBool)    
@@ -21,7 +21,7 @@ class OffboardNode:
         rospy.wait_for_service("/mavros/set_mode")
         self.set_mode_client = rospy.ServiceProxy("mavros/set_mode", SetMode)
 
-        self.velo = ActuatorControl()
+        self.velo = Thrust()
         self.offb_set_mode = SetModeRequest()
         self.offb_set_mode.custom_mode = 'OFFBOARD'
         self.arm_cmd = CommandBoolRequest()
@@ -36,8 +36,8 @@ class OffboardNode:
 
     def send_initial_velocity(self):
         
-        self.velo.group_mix=0
-        self.velo.controls=[1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+        self.velo.thrust=0
+       
 
         for i in range(100):   
             self.local_velo_pub.publish(self.velo)
