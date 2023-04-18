@@ -1,9 +1,9 @@
 <sdf version='1.6'>
   <model name='boat'>
     <link name='base_link'>
-      <pose>0 0 0 0 -0 0</pose>
+      <pose>0 0 0 0 0 0</pose>
       <inertial>
-        <pose >0 0 0.124229 0 -0 0</pose>
+        <pose >-1 0 0.124229 0 -0 0</pose>
         <mass>227</mass>
         <inertia>
           <ixx>181.42</ixx>
@@ -137,15 +137,6 @@
         </material>
       </visual>
 
-     <visual name='base_link_fixed_joint_lump__logo_visual_visual_1'>
-        <pose>-0.7 -1.55 -0.35 0 -0 0</pose>
-        <geometry>
-          <mesh>
-            <scale>1 1.5 1</scale>
-            <text>Hola mundo </text>
-          </mesh>
-        </geometry>
-      </visual>
     </link>
     
     <link name='left_propeller_link'>
@@ -273,6 +264,18 @@
       <pose>0 0 0.12 0 0 0</pose>
       <name>gps</name>
     </include>
+    
+    <include>
+      <uri>model://geotagged_cam</uri>
+      <pose>-0.2 0 0.8 3.15 3.15 0</pose>
+    </include>
+    <joint name="geotagged_cam_joint" type="fixed">
+      <parent>boat::base_link</parent>
+      <child>geotagged_cam::camera_link</child>
+    </joint>
+	
+    
+    
     <joint name='gps_joint' type='fixed'>
       <child>gps::link</child>
       <parent>base_link</parent>
@@ -308,6 +311,7 @@
       <robotNamespace></robotNamespace>
       <jointName>left_engine_propeller_joint</jointName>
       <linkName>left_propeller_link</linkName>
+      <reversible>1</reversible>
       <turningDirection>cw</turningDirection>
       <timeConstantUp>0.0125</timeConstantUp>
       <timeConstantDown>0.025</timeConstantDown>
@@ -321,10 +325,11 @@
       <motorSpeedPubTopic>/motor_speed/0</motorSpeedPubTopic>
       <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
     </plugin>
-    <plugin name='left_motor_model' filename='libgazebo_motor_model.so'>
+    <plugin name='right_motor_model' filename='libgazebo_motor_model.so'>
       <robotNamespace></robotNamespace>
       <jointName>right_engine_propeller_joint</jointName>
       <linkName>right_propeller_link</linkName>
+      <reversible>1</reversible>
       <turningDirection>cw</turningDirection>
       <timeConstantUp>0.0125</timeConstantUp>
       <timeConstantDown>0.025</timeConstantDown>
