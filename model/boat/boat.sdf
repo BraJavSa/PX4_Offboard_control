@@ -3,7 +3,7 @@
     <link name='base_link'>
       <pose>0 0 0 0 0 0</pose>
       <inertial>
-        <pose >-1 0 0.124229 0 -0 0</pose>
+        <pose >0 0 0.124229 0 -0 0</pose>
         <mass>227</mass>
         <inertia>
           <ixx>181.42</ixx>
@@ -99,9 +99,21 @@
           </script>
         </material>
       </visual>
-
-
-     
+      <visual name='cili_5'>
+         <pose> 0 0 -0.1 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.2</length>
+            <radius>0.04</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/DarkGrey</name>
+            <uri>__default__</uri>
+          </script>
+        </material>
+      </visual>
       
       <visual name='base_link_fixed_joint_lump__dummy_link_visual'>
         <pose>0 0 0 0 0 3.14</pose>
@@ -119,8 +131,6 @@
         </material>
       </visual>
       
-
-      
       <visual name='base_link_fixed_joint_lump__left_battery_visual_visual_1'>
         <pose>-0.7 -1.55 -0.35 0 -0 0</pose>
         <geometry>
@@ -136,7 +146,6 @@
           </script>
         </material>
       </visual>
-
     </link>
     
     <link name='left_propeller_link'>
@@ -259,27 +268,93 @@
         <use_parent_model_frame>1</use_parent_model_frame>
       </axis>
     </joint>
+    
     <include>
       <uri>model://gps</uri>
       <pose>0 0 0.12 0 0 0</pose>
       <name>gps</name>
     </include>
-    
-    <include>
-      <uri>model://geotagged_cam</uri>
-      <pose>-0.2 0 0.8 3.15 3.15 0</pose>
-    </include>
-    <joint name="geotagged_cam_joint" type="fixed">
+     
+     
+     <include>
+      <uri>model://lidar</uri>
+      <pose>0 0 -0.1 0 0 0</pose>
+     </include>
+   
+    <joint name="lidar_joint" type="fixed">
       <parent>boat::base_link</parent>
-      <child>geotagged_cam::camera_link</child>
+      <child>lidar::link</child>
     </joint>
-	
     
+    
+    
+	<link name='cam_link'>
+	   <pose>0 0 0.7 0 -0 0</pose>
+	     <inertial>
+	    <mass>0.1</mass>
+	    <pose>0 0 0 0 -0 0</pose>
+	    <inertia>
+	      <ixx>1</ixx>
+	      <ixy>0</ixy>
+	      <ixz>0</ixz>
+	      <iyy>1</iyy>
+	      <iyz>0</iyz>
+	      <izz>1</izz>
+	    </inertia>
+	    
+	  </inertial>
+	  <self_collide>0</self_collide>
+	  <kinematic>0</kinematic>
+	  <sensor name='camera1' type='camera'>
+	    <camera name="head">
+	      <horizontal_fov>1.3962634</horizontal_fov>
+	      <image>
+		<width>1280</width>
+		<height>720</height>
+		<format>R8G8B8</format>
+	      </image>
+	      <clip>
+		<near>0.02</near>
+		<far>300</far>
+	      </clip>
+	    </camera>
+	    <always_on>1</always_on>
+	    <update_rate>30</update_rate>
+	    <visualize>1</visualize>
+	    <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+	      <robotNamespace></robotNamespace>
+	      <alwaysOn>true</alwaysOn>
+	      <linkName>cam_link</linkName>
+	      <updateRate>0.0</updateRate>
+	      <cameraName>camera</cameraName>
+	      <imageTopicName>image_raw</imageTopicName>
+	      <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+	      <frameName>camera_link</frameName>
+	      <hackBaseline>0.07</hackBaseline>
+	      <distortionK1>0.0</distortionK1>
+	      <distortionK2>0.0</distortionK2>
+	      <distortionK3>0.0</distortionK3>
+	      <distortionT1>0.0</distortionT1>
+	      <distortionT2>0.0</distortionT2>
+	      </plugin>
+	    </sensor>
+	</link>
+
+
+  <joint name="cam_joint" type="fixed">
+          <pose>0 0 1 0 0 0</pose>
+          <parent>boat::base_link</parent>
+          <child>cam_link</child>
+        </joint>
+        
+
+     
     
     <joint name='gps_joint' type='fixed'>
       <child>gps::link</child>
       <parent>base_link</parent>
     </joint>
+
     <plugin name='gazebo_imu_plugin' filename='libgazebo_imu_plugin.so'>
       <robotNamespace></robotNamespace>
       <linkName>boat/imu_link</linkName>

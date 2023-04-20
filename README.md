@@ -107,3 +107,7 @@ You can change the vehicle on the launch but is necessary to change in px4.launc
 kayak_init.py is a python code that creates a topic for velocity commands (only use this for UAVs)
 drone_init.py is a python code that creates a topic for position commands (only use this for UAVs)
 manual_control.py is a python code that creates a topic for manual commands
+
+### NOTE 5
+
+the launch run a camera ROS topic named "boat/camera/image_raw" and a laser ROS topic named "laser/scan", you can delete this on the sdf. for the Laser topic need  replace the lidar folder of the "models" folder.
