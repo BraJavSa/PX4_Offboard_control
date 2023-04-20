@@ -48,7 +48,7 @@ class ManualNode:
         rospy.loginfo("Initial velocity published")
         self.set_mode_client.call(self.offb_set_mode)
         self.arming_client.call(self.arm_cmd)
-        rospy.loginfo("Arming and offboard mode completed")
+        rospy.loginfo("Arming and manual mode completed")
 
     def process(self):
     

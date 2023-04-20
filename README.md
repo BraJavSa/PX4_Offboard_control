@@ -92,13 +92,18 @@ Put this in the end of sdf file if you want to have a cam in the vehicle
       <child>geotagged_cam::camera_link</child>
     </joint>
 ```
+### NOTE 4
+
+Replace the "boat" folder on models folder for use the  kayak model
 
 ### Run
 
 `roslaunch px4_offboard_control mavros_posix_sitl_boat.launch`
-`rosrun px4_offboard_control kayak_init.py`
+
+`rosrun px4_offboard_control manual_control.py`
 
 You can change the vehicle on the launch but is necessary to change in px4.launch too.
 
-Kayak_init.py is a python code that creates a topic for velocity commands
-drone-init.py is a python code that creates a topic for position commands
+kayak_init.py is a python code that creates a topic for velocity commands (only use this for UAVs)
+drone_init.py is a python code that creates a topic for position commands (only use this for UAVs)
+manual_control.py is a python code that creates a topic for manual commands

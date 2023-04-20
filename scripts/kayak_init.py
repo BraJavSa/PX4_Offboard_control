@@ -31,7 +31,7 @@ class OffboardNode:
     def state_cb(self, msg):
         self.current_state = msg
     
-    def update_velocity(self, vel):
+    def update_velocity(self, vel=Twist):
     	self.velo = vel
 
     def send_initial_velocity(self):

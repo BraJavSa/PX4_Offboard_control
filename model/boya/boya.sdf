@@ -1,0 +1,71 @@
+<sdf version='1.6'>
+  <model name='boya'>
+    <link name='base_link'>
+      <pose>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose >0 0 0 0 -0 0</pose>
+        <mass>27</mass>
+        <inertia>
+          <ixx>8.42</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>5.203</iyy>
+          <iyz>0</iyz>
+          <izz>5.037</izz>
+        </inertia>
+      </inertial>
+
+      
+      <collision name='base_link_fixed_joint_lump__top_base_collision_25'>
+ 	<pose>0 0 0 0 0 3.14</pose>
+        <geometry>
+          <sphere>
+            <radius>0.7</radius>
+          </sphere>
+        </geometry>
+      </collision>
+      
+   
+      
+      <visual name='base_link_fixed_joint_lump__dummy_link_visual'>
+        <pose>0 0 0 0 0 3.14</pose>
+        <geometry>
+          <sphere>
+            <radius>0.7</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Red</name>
+            <uri>__default__</uri>
+          </script>
+        </material>
+      </visual>
+    </link>
+    
+    
+
+    <plugin name='usv_dynamics_wamv_dynamics_plugin' filename='libgazebo_usv_dynamics_plugin.so'>
+      <bodyName>base_link</bodyName>
+      <waterLevel>0.3</waterLevel>
+      <waterDensity>997.8</waterDensity>
+      <xDotU>0.0</xDotU>
+      <yDotV>0.0</yDotV>
+      <nDotR>0.0</nDotR>
+      <xU>10.3</xU>
+      <xUU>20.4</xUU>
+      <yV>20.6</yV>
+      <yVV>0.0</yVV>
+      <zW>100.0</zW>
+      <kP>10.0</kP>
+      <mQ>10.0</mQ>
+      <nR>40.0</nR>
+      <nRR>0.0</nRR>
+      <hullRadius>0.213</hullRadius>
+      <boatWidth>2.4</boatWidth>
+      <boatLength>4.9</boatLength>
+      <length_n>2</length_n>
+      <wave_model>ocean_waves</wave_model>
+    </plugin>
+      </model>
+</sdf>
