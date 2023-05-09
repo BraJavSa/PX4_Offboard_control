@@ -90,7 +90,7 @@ def main():
     manual_mode = ManualNode()
     manual_mode.send_initial_commands()
     rospy.on_shutdown(disarming_and_hold_mode)
-    rate = rospy.Rate(20)
+    rate = rospy.Rate(30)
 
     while not rospy.is_shutdown():
         manual_mode.process()
