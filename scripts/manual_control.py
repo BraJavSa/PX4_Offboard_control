@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import rospy
 import time 
 from geometry_msgs.msg import PoseStamped, Twist
@@ -11,8 +11,7 @@ class ManualNode:
         rospy.init_node("manual_node_py")
         
         self.state_sub = rospy.Subscriber("mavros/state", State, self.state_cb)
-        self.local_command_pub= rospy.Publisher("mavros/manual_control/send", ManualControl, queue_size=10)
-        
+        self.local_command_pub= rospy.Publisher("mavros/manual_control/send", ManualControl, queue_size=10)        
         self.command_sub = rospy.Subscriber("vehicle/manual", ManualControl, self.update_commands)
 
         rospy.wait_for_service("/mavros/cmd/arming")
@@ -87,6 +86,9 @@ def call_service(service,type,val):
          rospy.loginfo("Service call failed: %s"%e)
 
 def main():
+    rospy.loginfo("-------------------------------------------------------------------------------")
+    time.sleep(10)
+    rospy.loginfo("process")
     manual_mode = ManualNode()
     manual_mode.send_initial_commands()
     rospy.on_shutdown(disarming_and_hold_mode)

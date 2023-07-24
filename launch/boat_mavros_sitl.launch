@@ -52,5 +52,5 @@
         <arg name="respawn_mavros" value="$(arg respawn_mavros)"/>
     </include>
 
-
+	<node name="manual_node_py" pkg="px4_offboard_control" type="manual_control.py" output="screen"/>
 </launch>
