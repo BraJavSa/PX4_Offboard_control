@@ -44,7 +44,7 @@ class ManualNode:
             self.local_command_pub.publish(self.command)
             time.sleep(0.05)
 
-        rospy.loginfo("Initial velocity published")
+        rospy.loginfo("Initial manual controls published")
         self.set_mode_client.call(self.offb_set_mode)
         self.arming_client.call(self.arm_cmd)
         rospy.loginfo("Arming and manual mode completed")

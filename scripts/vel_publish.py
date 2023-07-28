@@ -16,7 +16,6 @@ class VelToManualConverter:
 
         # Establecer límites de velocidad
         self.max_linear_speed = 4.0  # Velocidad lineal máxima permitida
-      
         self.max_angular_speed = 2.3  # Velocidad angular máxima permitida
     
 
@@ -45,7 +44,7 @@ class VelToManualConverter:
         # Crear el mensaje ManualControl y establecer los valores apropiados
         manual_control_msg = ManualControl()
         manual_control_msg.z = linear_speed
-        manual_control_msg.y = -angular_speed
+        manual_control_msg.y = angular_speed
 
         # Publicar el mensaje en el topic "vehicle/manual"
         self.manual_control_pub.publish(manual_control_msg)

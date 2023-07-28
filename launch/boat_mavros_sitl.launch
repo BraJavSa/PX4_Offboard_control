@@ -53,4 +53,5 @@
     </include>
 
 	<node name="manual_node_py" pkg="px4_offboard_control" type="manual_control.py" output="screen"/>
+	<node name="vel_to_manual_converter" pkg="px4_offboard_control" type="vel_publish.py" output="screen"/>
 </launch>
