@@ -4,14 +4,14 @@ import rospy
 import math
 from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Twist
-
+import time
 from setpoint_gazebo_print import load_gazebo_model
 from setpoint_gazebo_delete import delete_gazebo_model
 
 class PositionController:
     def __init__(self):
-        self.hxd = 200
-        self.hyd = 200
+        self.hxd = 100
+        self.hyd = 100
         model_name = 'pos_d'
         model_file = 'model.sdf'
         model_pose = (self.hxd, self.hyd, 0.1, 0, 0, 0, 1)  # Posición (x, y, z) y Orientación (x, y, z, w) del modelo
@@ -73,6 +73,7 @@ class PositionController:
 
 # Inicialización de ROS
 rospy.init_node('position_controller')
+time.sleep(15)
 
 # Ejemplo de uso
 controller = PositionController()
