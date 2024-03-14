@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import rospy
 import rospkg
 from gazebo_msgs.srv import SpawnModel
@@ -5,7 +7,7 @@ from geometry_msgs.msg import Pose, Point, Quaternion
 
 def load_gazebo_model(model_name, model_file, model_pose):
     # Inicializa el nodo de ROS (si aún no está inicializado)
-    
+    rospy.init_node('print_pose')
     # Espera a que el servicio "/gazebo/spawn_sdf_model" esté disponible
     rospy.wait_for_service('/gazebo/spawn_sdf_model')
     
@@ -14,7 +16,9 @@ def load_gazebo_model(model_name, model_file, model_pose):
         spawn_model_service = rospy.ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
         
         # Lee el contenido del archivo del modelo
-        model_path = "/home/brayan/control_ws/src/px4_offboard_control/model/pos_d/" + model_file
+        rospack = rospkg.RosPack()
+        package_path = rospack.get_path('vrx_gazebo')
+        model_path = package_path +"/models/"+model_name+"/" + model_file
         with open(model_path, 'r') as file:
             model_xml = file.read()
         
@@ -37,7 +41,7 @@ def load_gazebo_model(model_name, model_file, model_pose):
 
 if __name__ == '__main__':
     # Reemplaza 'pos_d', 'model.sdf' y los valores de posición y orientación con los adecuados
-    model_name = 'pos_d'
+    model_name = 'robotx_light_buoy'
     model_file = 'model.sdf'
-    model_pose = (0, 0, 0.1, 0, 0, 0, 1)  # Posición (x, y, z) y Orientación (x, y, z, w) del modelo
+    model_pose = (100, 100, 0.1, 0, 0, 0, 1)  # Posición (x, y, z) y Orientación (x, y, z, w) del modelo
     load_gazebo_model(model_name, model_file, model_pose)
