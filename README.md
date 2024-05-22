@@ -25,6 +25,20 @@ This repository contains the development of the "INAUTin Gazebo, ROS (bridge wit
   ssh ubuntu@190.124.230.254
   password: raspberry
 
+  ## create a rosbag
+
+
+  ## replay the rosbag
+
+  terminal 1:
+  roscore
+  terminal 2:
+  rosbag play "name_of_your_bag".bag
+  terminal 3:
+  rosrun mavros gcs_bridge
+
+  add the server 0.0.0.0:14555 to your QGroundControl
+
   ## configurate enviroment
 
   roscore
