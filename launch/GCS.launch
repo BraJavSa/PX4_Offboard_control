@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+    <node name="video_consumer_node" pkg="px4_offboard_control" type="read_cam.py" output="screen" />
+    <node name="iaquabot_gui" pkg="px4_offboard_control" type="GUI.py" output="screen" />
+</launch>
