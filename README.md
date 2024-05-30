@@ -25,6 +25,10 @@ This repository contains the development of the "INAUTin Gazebo, ROS (bridge wit
   ssh ubuntu@190.124.230.254
   password: raspberry
 
+  
+  mavproxy.py --master=/dev/ttyACM0,57600 --out=udp:192.168.88.250:14550 --out=udp:192.168.88.257:14550 --out=udp:192.168.88.258:14550
+  
+
   ## create a rosbag
 
 
@@ -78,7 +82,14 @@ This repository contains the development of the "INAUTin Gazebo, ROS (bridge wit
   git clone -b noetic-devel https://github.com/ros-perception/image_common.git
   cd ~/catkin_ws
   catkin_make
+  pip install MAVProxy
+  echo "export PATH=$PATH:/usr/local/bin" >> ~/.bashrc
   ``` 
+
+  
+  
+
+ 
 
 
 
