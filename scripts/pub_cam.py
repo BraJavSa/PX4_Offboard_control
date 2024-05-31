@@ -11,7 +11,7 @@ def publish_video():
     Gst.init(None)
 
     # Configuración del pipeline
-    pipeline_str = "v4l2src device=/dev/video0 ! videoconvert ! videoscale ! video/x-raw,width=640,height=480 ! x264enc speed-preset=superfast tune=zerolatency key-int-max=15 bitrate=500 ! h264parse ! rtph264pay config-interval=1 pt=96 ! udpsink host=192.168.88.247 port=5000"
+    pipeline_str = "v4l2src device=/dev/video0 ! videoconvert ! videoscale ! video/x-raw,width=640,height=480 ! x264enc speed-preset=superfast tune=zerolatency key-int-max=15 bitrate=500 ! h264parse ! rtph264pay config-interval=1 pt=96 ! udpsink host=192.168.88.248 port=5000"
     pipeline = Gst.parse_launch(pipeline_str)
 
     # Iniciar el pipeline
