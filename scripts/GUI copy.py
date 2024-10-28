@@ -4,7 +4,8 @@ import rospy
 from std_msgs.msg import Float32MultiArray
 from mavros_msgs.msg import RCIn
 from sensor_msgs.msg import Image
-from cv_bridge import CvBridge
+from cv_bridge import CvBridge, CvBridgeError
+import cv2
 from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QLabel, QPushButton, QSlider
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QImage, QPixmap
@@ -92,14 +93,19 @@ class IAquaBotGUI(QWidget):
         self.update_manual_controls(throttle, roll)
 
     def image_callback(self, msg):
-        # Convertir el mensaje ROS Image a formato OpenCV
-        cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
-        # Convertir la imagen OpenCV a QImage
-        height, width, channel = cv_image.shape
-        bytes_per_line = 3 * width
-        q_image = QImage(cv_image.data, width, height, bytes_per_line, QImage.Format_RGB888)
-        # Actualizar QLabel con la nueva imagen
-        self.video_label.setPixmap(QPixmap.fromImage(q_image))
+        try:
+            # Convertir el mensaje ROS Image a una imagen OpenCV en YUV
+            yuyv_image = self.bridge.imgmsg_to_cv2(msg, "yuyv")
+            # Convertir la imagen YUYV a BGR
+            bgr_image = cv2.cvtColor(yuyv_image, cv2.COLOR_YUV2BGR_YUYV)
+            # Convertir la imagen OpenCV a QImage
+            height, width, channel = bgr_image.shape
+            bytes_per_line = 3 * width
+            q_image = QImage(bgr_image.data, width, height, bytes_per_line, QImage.Format_RGB888)
+            # Actualizar QLabel con la nueva imagen
+            self.video_label.setPixmap(QPixmap.fromImage(q_image))
+        except CvBridgeError as e:
+            rospy.logerr("CvBridge Error: {0}".format(e))
 
     def normalize(self, value, min_val, max_val):
         return 2 * (value - min_val) / (max_val - min_val) - 1
